@@ -1,0 +1,32 @@
+=breadcrumb_tag do
+  %li
+    = link_to 'Список коллекций', collections_path
+  %li.active
+    = t('headers.collections.show')
+%p#notice= notice
+
+%h1= @collection.colname
+
+%dl
+  %dt= Collection.human_attribute_name(:colname)
+  %dd= @collection.colname
+  
+  %dt= Collection.human_attribute_name(:description)
+  %dd= @collection.shdescription
+  
+  %dt= Collection.human_attribute_name(:begindate)
+  %dd= @collection.begindate
+
+  %dt= Collection.human_attribute_name(:enddate)
+  %dd= @collection.enddate
+  
+  %dt= Collection.human_attribute_name(:showrooms)
+  %dd= @collection.showrooms.map{ |a| a.roomname }.join(', ')
+
+
+= link_to 'Назад', collections_path, class: 'btn btn-primary'
+-if is_admin? || is_operator?
+  \|
+  = link_to 'Редактировать', edit_collection_path(@collection), class: 'btn btn-primary'
+
+

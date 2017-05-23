@@ -1,0 +1,48 @@
+=breadcrumb_tag do
+  %li
+    = link_to 'Список экспонатов', exhibits_path
+  %li.active
+    = t('headers.exhibits.show')  
+.page-header
+  %h1= t('headers.exhibits.show')
+
+%p#notice= notice
+
+%h1= @exhibit.name
+
+%dl
+  %dt= Exhibit.human_attribute_name(:sdescription)
+  %dd= @exhibit.sdescription
+  
+  %dt= Exhibit.human_attribute_name(:insurance)
+  %dd= @exhibit.insurance
+
+  %dt= Exhibit.human_attribute_name(:century)
+  %dd= @exhibit.century
+  
+  %dt= Exhibit.human_attribute_name(:height)
+  %dd= @exhibit.height
+  
+  %dt= Exhibit.human_attribute_name(:width)
+  %dd= @exhibit.width
+  
+  %dt= Exhibit.human_attribute_name(:length)
+  %dd= @exhibit.length
+
+  %dt= Exhibit.human_attribute_name(:tempcontrol)
+  %dd= @exhibit.tempcontrol ? "Да" : "Нет"
+
+  %dt= Exhibit.human_attribute_name(:himiditycontrol)
+  %dd= @exhibit.himiditycontrol ? "Да" : "Нет"
+  
+  %dt= Exhibit.human_attribute_name(:peopleprotect)
+  %dd= @exhibit.peopleprotect ? "Да" : "Нет"
+  
+  %dt= Exhibit.human_attribute_name(:collection)
+  %dd= @exhibit.collection.colname
+  
+= link_to 'Назад', exhibits_path, class: 'btn btn-primary'
+- if is_admin? || is_operator?
+  \|
+  = link_to 'Редактировать', edit_exhibit_path(@exhibit), class: 'btn btn-primary'
+

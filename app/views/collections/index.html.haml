@@ -1,0 +1,42 @@
+=breadcrumb_tag do
+  %li.active
+    Список коллекций
+.page-header
+  %h1= t('headers.collections.index') 
+  
+%table.table.table-hover.table-striped
+  %caption
+    - if is_admin? || is_operator?
+      = link_to new_collection_path, class: 'btn btn-success' do
+        = fa_icon :plus
+        = t('buttons.new.collection')   
+  %thead
+    %tr
+      %th= Collection.human_attribute_name(:colname)
+      %th= Collection.human_attribute_name(:description)
+      %th= Collection.human_attribute_name(:begindate)
+      %th= Collection.human_attribute_name(:enddate)
+      %th= Collection.human_attribute_name(:showrooms)
+      %th
+
+  %tbody
+    - @collections.each do |collection|
+      %tr
+        %td{"data-label" => "Название"}= collection.colname
+        %td{"data-label" => "Описание"}= collection.description
+        %td{"data-label" => "Дата начала"}= collection.begindate
+        %td{"data-label" => "Дата окончания"}= collection.enddate
+        %td{"data-label" => "Название зала"}= collection.showrooms.map{|x| x.roomname}.join(', ')
+        %td.right
+          = link_to collection, class: 'btn btn-warning' do
+            = fa_icon :eye
+            = t('buttons.show')
+          - if is_admin? || is_operator?  
+            = link_to edit_collection_path(collection), class: 'btn btn-info' do
+              = fa_icon :edit
+              = t('buttons.edit')
+            = link_to collection, :method => :delete, 
+            :data => { :confirm => t('buttons.confirm.collection') }, 
+            class: 'btn btn-danger' do
+              = fa_icon :times
+              = t('buttons.destroy')
