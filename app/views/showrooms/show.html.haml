@@ -1,0 +1,14 @@
+=breadcrumb_tag do
+  %li
+    = link_to 'Список залов', showrooms_path 
+  %li.active
+    = t('headers.showrooms.show')
+
+%dl
+  %dt= Showroom.human_attribute_name(:roomname)
+  %dd= @showroom.roomname
+
+= link_to 'Назад', showrooms_path, class: 'btn btn-primary'
+- if is_admin? || is_operator?
+  \|
+  = link_to 'Редактировать', edit_showroom_path(@showroom), class: 'btn btn-primary'

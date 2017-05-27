@@ -1,0 +1,38 @@
+=breadcrumb_tag do
+  %li.active
+    Список залов
+.page-header
+  %h1= t('headers.showrooms.index')
+
+%table.table.table-hover.table-striped
+  %caption
+    - if is_admin?
+      = link_to new_showroom_path, class: 'btn btn-success' do
+        = fa_icon :plus
+        = t('buttons.new.showroom')
+  %thead
+    %tr
+      -if is_operator?
+        .center
+          %h6 Добавлять и удалять залы может только администратор!
+      %th= Showroom.human_attribute_name(:roomname)
+      %th
+
+  %tbody
+    - @showrooms.each do |showroom|
+      %tr
+        %td{"data-label" => "Зал"}= showroom.roomname
+        %td.right
+          = link_to showroom, class: 'btn btn-warning' do
+            = fa_icon :eye
+            = t('buttons.show')
+          - if is_admin? || is_operator?  
+            = link_to edit_showroom_path(showroom), class: 'btn btn-info' do
+              = fa_icon :edit
+              = t('buttons.edit')
+          - if is_admin?     
+            = link_to showroom, :method => :delete, 
+            :data => { :confirm => t('buttons.confirm.showroom') }, 
+            class: 'btn btn-danger' do
+              = fa_icon :times
+              = t('buttons.destroy')

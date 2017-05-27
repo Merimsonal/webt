@@ -11,10 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170409205031) do
+ActiveRecord::Schema.define(version: 20170501085108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "collections", force: :cascade do |t|
+    t.text     "colname",       null: false
+    t.text     "shdescription", null: false
+    t.date     "begindate",     null: false
+    t.date     "enddate",       null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "collections", ["colname"], name: "index_collections_on_colname", unique: true, using: :btree
+
+  create_table "collections_showrooms", id: false, force: :cascade do |t|
+    t.integer "collection_id", null: false
+    t.integer "showroom_id",   null: false
+  end
+
+  add_index "collections_showrooms", ["collection_id", "showroom_id"], name: "index_collections_showrooms_on_collection_id_and_showroom_id", unique: true, using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
@@ -31,6 +49,25 @@ ActiveRecord::Schema.define(version: 20170409205031) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "exhibits", force: :cascade do |t|
+    t.text     "name",            null: false
+    t.text     "sdescription",    null: false
+    t.integer  "insurance",       null: false
+    t.integer  "century",         null: false
+    t.integer  "height",          null: false
+    t.integer  "width",           null: false
+    t.integer  "length",          null: false
+    t.boolean  "tempcontrol",     null: false
+    t.boolean  "himiditycontrol", null: false
+    t.boolean  "peopleprotect",   null: false
+    t.integer  "collection_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "exhibits", ["collection_id"], name: "index_exhibits_on_collection_id", using: :btree
+  add_index "exhibits", ["name"], name: "index_exhibits_on_name", unique: true, using: :btree
 
   create_table "role_users", force: :cascade do |t|
     t.integer  "role_id",    null: false
@@ -54,6 +91,14 @@ ActiveRecord::Schema.define(version: 20170409205031) do
   add_index "roles", ["info"], name: "index_roles_on_info", unique: true, using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", unique: true, using: :btree
 
+  create_table "showrooms", force: :cascade do |t|
+    t.text     "roomname",   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "showrooms", ["roomname"], name: "index_showrooms_on_roomname", unique: true, using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                                       null: false
     t.string   "crypted_password"
@@ -75,6 +120,7 @@ ActiveRecord::Schema.define(version: 20170409205031) do
     t.datetime "last_logout_at"
     t.datetime "last_activity_at"
     t.string   "last_login_from_ip_address"
+    t.date     "birthday"
   end
 
   add_index "users", ["activation_token"], name: "index_users_on_activation_token", using: :btree
@@ -95,6 +141,7 @@ ActiveRecord::Schema.define(version: 20170409205031) do
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
+  add_foreign_key "exhibits", "collections"
   add_foreign_key "role_users", "roles"
   add_foreign_key "role_users", "users"
 end

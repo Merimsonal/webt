@@ -1,0 +1,9 @@
+= form_for @showroom do |f|
+  = error_messages_for @showroom
+  .row
+    .col-md-4
+      .form-group
+        = f.label :roomname
+        = f.text_area :roomname, class: 'form-control'
+  .actions.margin-small-top
+    = f.submit nil, class: 'btn btn-primary'

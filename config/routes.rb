@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  resources :exhibits do
+    collection do
+      get :search
+    end
+  end
+  resources :showrooms
+  resources :collections
   resources :role_users
   resources :roles
   resources :password_resets

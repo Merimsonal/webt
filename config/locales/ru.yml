@@ -1,26 +1,62 @@
 ru:
   app:
-    name: Базовое приложение
+    name: Музей
     company:
       short_name: МПУ
       department: Кафедра
-    users:
-      index: Список пользователей
-      new-button: Новый пользователь 
-      edit: Редактирование пользователя
-      new: Создание пользователя
-    roles:
-      index: Список возможных ролей пользователей
-      new-button: Новая роль
-      edit: Редактирование роли
-      new: Создание роли
+    collection:
+      new: Новая коллекция
   helpers:
     submit:
-      create: Сохранить
-      submit: Сохранить
-      update: Сохранить
-    sure: Действительно удалить?      
-  
+      create: Создать
+      submit: Подтвердить
+      update: Обновить
+  buttons:
+    edit: Редактировать
+    destroy: Удалить
+    show: Показать
+    confirm:
+      user: Действительно удалить пользователя?
+      role: Действительно удалить роль?
+      collection: Действительно удалить коллекцию?
+      exhibit: Действительно удалить экспонат?
+      showroom: Действительно удалить зал?
+    new: 
+      user: Новый пользователь
+      role: Новая роль
+      collection: Новая коллекция
+      exhibit: Новый экспонат
+      showroom: Новый зал
+    search:
+      exhibit: Поиск
+    exhibit_search: Найдено
+  headers:
+    users:
+      edit: Редактировать пользователя
+      new: Новый пользователь
+      index: Список пользователей
+    roles:
+      index: Список возможных ролей пользователей
+      edit: Редактирование роли
+      new: Новая роль
+    collections:
+      new: Новая коллекция
+      index: Список коллекций
+      edit: Редактирование коллекции
+      show: Просмотр информации о коллекции
+    exhibits:
+      new: Новый экспонат
+      index: Список экспонатов
+      edit: Редактирование экспоната
+      show: Просмотр информации об экспонате
+      search: Поиск экспонатов
+    showrooms:
+      new: Новый зал
+      index: Список залов
+      edit: Редактирование зала
+      show: Просмотр информации о зале
+      
+          
   views:
     pagination:
       first: ⇤
@@ -34,6 +70,7 @@ ru:
     attributes:
       user:
         email: Пользовательское имя/электронная почта
+        birthday: Дата рождения
         password: Пароль
         password_confirmation: Подтверждение пароля
         reset_password_email_sent_at: Дата отправления письма для смены пароля
@@ -45,10 +82,37 @@ ru:
         name: Обозначение
         info: Краткое название
         full_info: Описание
-    errors:
-      models:
-        person:
-          attributes:
-            snils:
-              check_sum: имеет неправильную контрольную сумму
-          
+      collection:
+        colname: Название коллекции
+        shdescription: Краткое описание
+        begindate: Дата начала показа
+        enddate: Дата окончания показа
+        showrooms: Выставочные залы
+      exhibit:
+        tempcontrol: Контроль температуры
+        himiditycontrol: Контроль лажности
+        peopleprotect: Защищать от людей
+        name: Название
+        sdescription: Описание
+        insurance: Страховая стоимость
+        century: Век
+        height: Высота
+        width: Ширина
+        length: Длина
+        collection: Коллекция
+      showroom:
+        roomname: Название зала     
+      # nested_start
+      role_user: &role_users
+      # nested_finish
+        role: Роль
+        role_id: Роль
+        data: Параметры
+      # nested_start
+      user/role_users:
+        <<: *role_users
+      # nested_finish
+      showroom: &showrooms
+        roomname: Зал
+      collection/showrooms:
+        <<: *showrooms                   

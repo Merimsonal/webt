@@ -1,0 +1,11 @@
+=breadcrumb_tag do
+  %li
+    = link_to 'Список коллекций', collections_path
+  %li.active
+    = t('headers.collections.new')  
+.page-header
+  %h1= t('headers.collections.new')
+
+= render 'form'
+%br
+= link_to 'Назад', collections_path, class: 'btn btn-primary'
